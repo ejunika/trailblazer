@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+      http://www.springframework.org/schema/security 
+      http://www.springframework.org/schema/security/spring-security-4.2.xsd
+      http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+	<global-method-security pre-post-annotations="enabled" />
+	
+	<http pattern="/rest" security="none"/>
+	<http pattern="/rest/users/login" security="none"/> 
+	<http pattern="/rest/users/signup" security="none"/> 
+	
+<!-- 	<beans:bean id="restAuthenticationEntryPoint" class="com.ejudo.portal.core.security.RestAuthenticationEntryPoint" /> -->
+
+<!-- 	<beans:bean id="jwtAuthenticationProvider" class="com.ejudo.portal.core.security.JwtAuthenticationProvider" /> -->
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="jwtAuthenticationProvider" />
+	</authentication-manager>
+	
+<!-- 	<beans:bean id="jwtAuthenticationSuccessHandler" class="com.ejudo.portal.core.security.JwtAuthenticationSuccessHandler" /> -->
+<!-- 	<beans:bean id="jwtUtil" class="com.ejudo.portal.core.security.JwtUtil" /> -->
+
+<!-- 	<beans:bean id="jwtAuthenticationFilter" class="com.ejudo.portal.core.security.JwtAuthenticationFilter"> -->
+<!-- 		<beans:property name="authenticationManager" ref="authenticationManager" /> -->
+<!-- 		<beans:property name="authenticationSuccessHandler" ref="jwtAuthenticationSuccessHandler" /> -->
+<!-- 		<beans:property name="authenticationFailureHandler" ref="myAuthenticationFailureHandler" /> -->
+<!-- 	</beans:bean> -->
+
+	<http pattern="/rest/**" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
+		<sec:csrf disabled="true"/>
+		<sec:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
+	</http>
+
+<!-- 	<beans:bean id="mySuccessHandler" class="com.ejudo.portal.core.security.MySavedRequestAwareAuthenticationSuccessHandler" /> -->
+<!-- 	<beans:bean id="myAuthenticationFailureHandler" class="com.ejudo.portal.core.security.MyAuthenticationFailureHandler" /> -->
+
+</beans:beans>
