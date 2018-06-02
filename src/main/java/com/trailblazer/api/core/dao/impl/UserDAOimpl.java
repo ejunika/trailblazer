@@ -33,13 +33,11 @@ public class UserDAOimpl extends CommonDAOimpl<User, Long> implements UserDAO {
 
 	@Override
 	public User blockUser(Long userId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public User activateUser(Long userId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
