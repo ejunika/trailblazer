@@ -29,6 +29,7 @@
 	    <property name="mapper" ref="jacksonObjectMapper"/>
 	</bean>
     
+    <bean id="btExceptionHandler" class="com.trailblazer.api.core.exceptions.BtExceptionHandler" />
     <bean id="commonExceptionHandler" class="com.trailblazer.api.core.exceptions.CommonExceptionHandler" />
 
     <jaxrs:server id="authServiceServer" address="/auth">
@@ -37,6 +38,7 @@
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="jsonProvider" />
+            <ref bean="btExceptionHandler" />
             <ref bean="commonExceptionHandler" />
         </jaxrs:providers>
     </jaxrs:server>
@@ -47,6 +49,7 @@
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="jsonProvider" />
+            <ref bean="btExceptionHandler" />
             <ref bean="commonExceptionHandler" />
         </jaxrs:providers>
     </jaxrs:server>

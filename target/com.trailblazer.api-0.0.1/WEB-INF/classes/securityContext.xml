@@ -10,8 +10,8 @@
       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 	<global-method-security pre-post-annotations="enabled" />
 	
-	<http pattern="/v1/api" security="none"/>
 	<http pattern="/v1/api/auth/**" security="none"/>
+	<http pattern="/v1/api" security="none"/>
 	
 	<beans:bean id="restAuthenticationEntryPoint" class="com.trailblazer.api.core.security.RestAuthenticationEntryPoint" />
 	<beans:bean id="jwtAuthenticationFilter" class="com.trailblazer.api.core.security.JwtAuthenticationFilter">
