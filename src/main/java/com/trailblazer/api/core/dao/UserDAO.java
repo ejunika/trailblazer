@@ -5,6 +5,8 @@ import com.trailblazer.api.core.entities.User;
 public interface UserDAO extends CommonDAO<User, Long> {
 
 	public User getUserByEmailId(String emailId);
+	
+	public User getUserByUsername(String username);
 
 	public User blockUser(Long userId);
 
