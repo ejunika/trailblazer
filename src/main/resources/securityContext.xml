@@ -10,33 +10,28 @@
       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 	<global-method-security pre-post-annotations="enabled" />
 	
-	<http pattern="/rest" security="none"/>
-	<http pattern="/rest/users/login" security="none"/> 
-	<http pattern="/rest/users/signup" security="none"/> 
+	<http pattern="/v1/api" security="none"/>
 	
-<!-- 	<beans:bean id="restAuthenticationEntryPoint" class="com.ejudo.portal.core.security.RestAuthenticationEntryPoint" /> -->
-
-<!-- 	<beans:bean id="jwtAuthenticationProvider" class="com.ejudo.portal.core.security.JwtAuthenticationProvider" /> -->
-
-	<authentication-manager alias="authenticationManager">
-		<authentication-provider ref="jwtAuthenticationProvider" />
-	</authentication-manager>
-	
-<!-- 	<beans:bean id="jwtAuthenticationSuccessHandler" class="com.ejudo.portal.core.security.JwtAuthenticationSuccessHandler" /> -->
-<!-- 	<beans:bean id="jwtUtil" class="com.ejudo.portal.core.security.JwtUtil" /> -->
-
-<!-- 	<beans:bean id="jwtAuthenticationFilter" class="com.ejudo.portal.core.security.JwtAuthenticationFilter"> -->
-<!-- 		<beans:property name="authenticationManager" ref="authenticationManager" /> -->
-<!-- 		<beans:property name="authenticationSuccessHandler" ref="jwtAuthenticationSuccessHandler" /> -->
-<!-- 		<beans:property name="authenticationFailureHandler" ref="myAuthenticationFailureHandler" /> -->
-<!-- 	</beans:bean> -->
-
-	<http pattern="/rest/**" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
+	<beans:bean id="restAuthenticationEntryPoint" class="com.trailblazer.api.core.security.RestAuthenticationEntryPoint" />
+	<beans:bean id="jwtAuthenticationFilter" class="com.trailblazer.api.core.security.JwtAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationSuccessHandler" ref="restAuthenticationSuccessHandler" />
+		<beans:property name="authenticationFailureHandler" ref="restAuthenticationFailureHandler" />
+	</beans:bean>
+	<http pattern="/v1/api/**" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
 		<sec:csrf disabled="true"/>
 		<sec:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
 	</http>
 
-<!-- 	<beans:bean id="mySuccessHandler" class="com.ejudo.portal.core.security.MySavedRequestAwareAuthenticationSuccessHandler" /> -->
-<!-- 	<beans:bean id="myAuthenticationFailureHandler" class="com.ejudo.portal.core.security.MyAuthenticationFailureHandler" /> -->
+	<beans:bean id="restAuthenticationProvider" class="com.trailblazer.api.core.security.RestAuthenticationProvider" />
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="restAuthenticationProvider" />
+	</authentication-manager>
+	
+	<beans:bean id="jwtUtil" class="com.trailblazer.api.core.security.JwtUtil" />
+	<beans:bean id="restAuthenticationSuccessHandler" class="com.trailblazer.api.core.security.RestAuthenticationSuccessHandler" />
+	<beans:bean id="restAuthenticationFailureHandler" class="com.trailblazer.api.core.security.RestAuthenticationFailureHandler" />
+	<beans:bean id="restSavedRequestAwareAuthenticationSuccessHandler" class="com.trailblazer.api.core.security.RestSavedRequestAwareAuthenticationSuccessHandler" />
+
 
 </beans:beans>
