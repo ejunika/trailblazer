@@ -20,17 +20,34 @@
             <cxf:logging/>
         </cxf:features>
     </cxf:bus>
+        
+    <bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper">
+	    <property name="serializationInclusion" value="NON_NULL"/>
+	</bean>
+	
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider">
+	    <property name="mapper" ref="jacksonObjectMapper"/>
+	</bean>
     
-    <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+    <bean id="commonExceptionHandler" class="com.trailblazer.api.core.exceptions.CommonExceptionHandler" />
 
+    <jaxrs:server id="authServiceServer" address="/auth">
+        <jaxrs:serviceBeans>
+		    <bean class="com.trailblazer.api.core.rest.services.impl.AuthServiceImpl" autowire="byName" />
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="jsonProvider" />
+            <ref bean="commonExceptionHandler" />
+        </jaxrs:providers>
+    </jaxrs:server>
+    
     <jaxrs:server id="usersServiceServer" address="/users">
         <jaxrs:serviceBeans>
 		    <bean class="com.trailblazer.api.core.rest.services.impl.UserServiceImpl" autowire="byName" />
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="jsonProvider" />
-<!--             <bean class="com.ejudo.portal.core.exception.EZExceptionHandler" /> -->
-<!--             <bean class="com.ejudo.portal.core.exception.CommonExceptionHandler" /> -->
+            <ref bean="commonExceptionHandler" />
         </jaxrs:providers>
     </jaxrs:server>
         

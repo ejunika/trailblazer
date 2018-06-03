@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author azaz.akhtar
+ *
+ */
 @Entity
 @Table(name = "users")
 @XmlRootElement
@@ -20,6 +24,14 @@ public class User extends AbstractEntity {
 	private String firstName;
 	@Column(name = "last_name")
 	private String lastName;
+	
+	public User() {
+		super();
+	}
+	
+	public User(User user) {
+		super(user);
+	}
 
 	public String getFirstName() {
 		return firstName;
