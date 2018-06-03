@@ -40,5 +40,24 @@ public class UserDAOimpl extends CommonDAOimpl<User, Long> implements UserDAO {
 	public User activateUser(Long userId) {
 		return null;
 	}
+
+	@Override
+	public User getUserByUsername(String username) {
+		User user = null;
+		CriteriaBuilder builder = null;
+		CriteriaQuery<User> criteriaQuery = null;
+		Root<User> root = null;
+		Query<User> query = null;
+		try (Session session = getSessionFactory().openSession()) {
+			builder = session.getCriteriaBuilder();
+			criteriaQuery = builder.createQuery(User.class);
+			root = criteriaQuery.from(User.class);
+			criteriaQuery.where(builder.equal(root.get("username"), username));
+			criteriaQuery.select(root);
+			query = session.createQuery(criteriaQuery);
+			user = query.uniqueResult();
+		}
+		return user;
+	}
 	
 }

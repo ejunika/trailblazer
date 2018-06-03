@@ -64,6 +64,9 @@
         </property>
     </bean>
     
+    <bean id="userDAO" class="com.trailblazer.api.core.dao.impl.UserDAOimpl" autowire="byName" />
+    <bean id="authManager" class="com.trailblazer.api.core.rest.manager.AuthManager" autowire="byName" />
+    
     <import resource="classpath:restContext.xml"/>
     
 </beans>
