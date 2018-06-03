@@ -23,15 +23,26 @@
     
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
 
-    <!-- <jaxrs:server id="usersServiceServer" address="/users">
+    <jaxrs:server id="authServiceServer" address="/auth">
         <jaxrs:serviceBeans>
-		    <bean class="com.ejudo.portal.core.api.rest.impl.UserServiceImpl" autowire="byName" />
+		    <bean class="com.trailblazer.api.core.rest.services.impl.AuthServiceImpl" autowire="byName" />
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="jsonProvider" />
-            <bean class="com.ejudo.portal.core.exception.EZExceptionHandler" />
-            <bean class="com.ejudo.portal.core.exception.CommonExceptionHandler" />
+<!--             <bean class="com.ejudo.portal.core.exception.EZExceptionHandler" /> -->
+<!--             <bean class="com.ejudo.portal.core.exception.CommonExceptionHandler" /> -->
         </jaxrs:providers>
-    </jaxrs:server> -->
+    </jaxrs:server>
+    
+    <jaxrs:server id="usersServiceServer" address="/users">
+        <jaxrs:serviceBeans>
+		    <bean class="com.trailblazer.api.core.rest.services.impl.UserServiceImpl" autowire="byName" />
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="jsonProvider" />
+<!--             <bean class="com.ejudo.portal.core.exception.EZExceptionHandler" /> -->
+<!--             <bean class="com.ejudo.portal.core.exception.CommonExceptionHandler" /> -->
+        </jaxrs:providers>
+    </jaxrs:server>
         
 </beans>

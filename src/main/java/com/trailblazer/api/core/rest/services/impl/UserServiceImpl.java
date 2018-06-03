@@ -7,6 +7,10 @@ import javax.ws.rs.core.Response;
 import com.trailblazer.api.core.entities.User;
 import com.trailblazer.api.core.rest.services.UserService;
 
+/**
+ * @author azaz.akhtar
+ *
+ */
 public class UserServiceImpl implements UserService {
 
 	@Override

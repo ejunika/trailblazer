@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
+import com.trailblazer.api.core.utils.BTMessageContainer;
+
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 	public JwtAuthenticationFilter() {
         super("/**");
@@ -27,7 +29,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         String header = request.getHeader("Authorization");
 
         if (header == null || !header.startsWith("Bearer ")) {
-            throw new JwtTokenMissingException("No JWT token found in request headers");
+            throw new JwtTokenMissingException(BTMessageContainer.TOKEN_MISSING_MESSAGE);
         }
 
         String authToken = header.substring(7);

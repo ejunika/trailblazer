@@ -19,7 +19,10 @@ public class RestAuthenticationFailureHandler implements AuthenticationFailureHa
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		PrintWriter out = response.getWriter();
-		out.print("{\"status\":false,\"infoMessage\":\"Invalid Access Token\"}");
+		
+		String causedBy = exception.getMessage();
+		
+		out.print("{\"status\":false,\"infoMessage\":\"" + causedBy + "\"}");
 	}
 	
 }
