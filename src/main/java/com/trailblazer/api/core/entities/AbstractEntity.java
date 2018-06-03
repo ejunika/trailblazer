@@ -12,6 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author azaz.akhtar
+ *
+ */
 @MappedSuperclass
 @XmlRootElement
 public class AbstractEntity implements Serializable {
@@ -42,10 +46,18 @@ public class AbstractEntity implements Serializable {
 
 	public AbstractEntity() {
 		super();
+		this.createdAt = new Date();
+		this.updatedAt = new Date();
+	}
+	
+	public AbstractEntity(User user) {
+		this();
+		this.createdBy = user;
+		this.updatedBy = user;
 	}
 
 	public AbstractEntity(Long entityId) {
-		super();
+		this();
 		this.entityId = entityId;
 	}
 

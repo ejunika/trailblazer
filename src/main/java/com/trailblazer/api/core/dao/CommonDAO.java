@@ -5,6 +5,12 @@ import java.util.List;
 
 import com.trailblazer.api.core.entities.AbstractEntity;
 
+/**
+ * @author azaz.akhtar
+ *
+ * @param <E>
+ * @param <I>
+ */
 public interface CommonDAO<E extends AbstractEntity, I extends Serializable> {
 
 	/**
