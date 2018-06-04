@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+import com.trailblazer.api.core.entities.BtResponse;
 import com.trailblazer.api.core.entities.User;
 import com.trailblazer.api.core.rest.services.UserService;
+import com.trailblazer.api.core.utils.BTMessageContainer;
 
 /**
  * @author azaz.akhtar
@@ -15,7 +17,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Response get(Integer offset, Integer limit, List<Byte> rsl) {
-		return null;
+		User u = new User();
+		u.setEmailId("akhtar.azaz@live.com");
+		u.setUsername("ejunika");
+		u.setFirstName("Md Azaz");
+		u.setLastName("Akhtar");
+		return Response.ok(new BtResponse<User>(true, BTMessageContainer.RETRIVE_USER_MESSAGE, u)).build();
 	}
 
 	@Override

@@ -27,7 +27,14 @@ public class JwtUtil {
 	/**
 	 * 
 	 */
-	protected static Map<String, User> portalSession = new ConcurrentHashMap<>();
+	protected static Map<String, User> tbSession = new ConcurrentHashMap<>();
+	
+	static {
+		User u = new User();
+		u.setEntityId(111l);
+		u.setEmailId("test.user@test.com");
+		System.out.println(new JwtUtil().generateToken(u));
+	}
 
 	/**
 	 * @param token
@@ -65,7 +72,7 @@ public class JwtUtil {
 		claims.put("emailId", user.getEmailId());
 		accessToken = Jwts.builder().setClaims(claims).signWith(SIGNATUREALGORITHM, BASE64ENCODEDKEY).compact();
 		if (accessToken != null) {
-			portalSession.put(accessToken, user);
+			tbSession.put(accessToken, user);
 		}
 		return accessToken;
 	}

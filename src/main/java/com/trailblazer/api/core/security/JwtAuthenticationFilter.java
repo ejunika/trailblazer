@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import com.trailblazer.api.core.utils.BTMessageContainer;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+	
 	public JwtAuthenticationFilter() {
         super("/**");
     }
@@ -24,7 +25,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
         String header = request.getHeader("Authorization");
 
