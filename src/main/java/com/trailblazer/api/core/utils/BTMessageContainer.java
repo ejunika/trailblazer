@@ -12,6 +12,7 @@ public class BTMessageContainer {
 	public static final String SIGNUP_FAILURE_MESSAGE = "Error while registration";
 	public static final String DUPLICATE_USER_EXCEPTION_MESSAGE = "An user with same emailId already exists";
 	public static final String DUPLICATE_USERNAME_EXCEPTION_MESSAGE = "Username is not available";
+	public static final String RETRIVE_USER_MESSAGE = "Users retrieved successfully";
 	
 	private BTMessageContainer() {
 		super();
