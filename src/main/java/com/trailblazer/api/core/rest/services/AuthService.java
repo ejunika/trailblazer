@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.trailblazer.api.core.entities.SignupRequest;
 import com.trailblazer.api.core.entities.User;
 
 /**
@@ -41,6 +42,6 @@ public interface AuthService {
 	 */
 	@POST
 	@Path("/signup")
-	Response signup(User user);
+	Response signup(SignupRequest signupRequest);
 
 }

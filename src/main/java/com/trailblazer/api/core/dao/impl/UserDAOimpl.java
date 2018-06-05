@@ -1,15 +1,24 @@
 package com.trailblazer.api.core.dao.impl;
 
+import java.util.Date;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.trailblazer.api.core.dao.UserDAO;
+import com.trailblazer.api.core.entities.Password;
 import com.trailblazer.api.core.entities.User;
+import com.trailblazer.api.core.utils.RecordStatus;
 
+/**
+ * @author azaz.akhtar
+ *
+ */
 public class UserDAOimpl extends CommonDAOimpl<User, Long> implements UserDAO {
 
 	@Override
@@ -59,5 +68,33 @@ public class UserDAOimpl extends CommonDAOimpl<User, Long> implements UserDAO {
 		}
 		return user;
 	}
-	
+
+	@Override
+	public User signup(User user, Password password) {
+		Transaction transaction = null;
+		try (Session session = getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			if (transaction != null) {
+				Date currentDate = new Date();
+				user.setCreatedAt(currentDate);
+				user.setUpdatedAt(currentDate);
+				user.setRecordStatus(RecordStatus.NEW);
+				password.setCreatedAt(currentDate);
+				password.setUpdatedAt(currentDate);
+				password.setRecordStatus(RecordStatus.ACTIVE);
+				session.save(user);
+				password.setCreatedBy(user);
+				password.setUpdatedBy(user);
+				session.save(password);
+				transaction.commit();
+			}
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			LOGGER.error(e);
+		}
+		return user;
+	}
+
 }

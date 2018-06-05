@@ -65,6 +65,7 @@ public interface CommonDAO<E extends AbstractEntity, I extends Serializable> {
 	E delete(I id);
 
 	/**
+	 * Changed the record status of the entity to deleted
 	 * @param id
 	 * @return
 	 */

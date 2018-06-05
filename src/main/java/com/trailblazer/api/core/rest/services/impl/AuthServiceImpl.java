@@ -3,6 +3,7 @@ package com.trailblazer.api.core.rest.services.impl;
 import javax.ws.rs.core.Response;
 
 import com.trailblazer.api.core.entities.BtResponse;
+import com.trailblazer.api.core.entities.SignupRequest;
 import com.trailblazer.api.core.entities.User;
 import com.trailblazer.api.core.rest.manager.AuthManager;
 import com.trailblazer.api.core.rest.services.AuthService;
@@ -27,8 +28,8 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public Response signup(User user) {
-		if (authManager.signup(user)) {
+	public Response signup(SignupRequest signupRequest) {
+		if (authManager.signup(signupRequest)) {
 			return Response.ok(new BtResponse<>(true, BTMessageContainer.SIGNUP_SUCCESS_MESSAGE)).build();
 		} else {
 			return Response.ok(new BtResponse<>(true, BTMessageContainer.SIGNUP_FAILURE_MESSAGE)).build();
