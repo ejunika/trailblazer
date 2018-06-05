@@ -45,7 +45,7 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
 			throw new JwtTokenMalformedException("JWT token is not valid");
 		}
 		
-		grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_UœSER");
+		grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN");
 		
 		return new AuthenticatedUser(parsedUser.getEntityId(), parsedUser.getUsername(), token, grantedAuthorities);
 	}

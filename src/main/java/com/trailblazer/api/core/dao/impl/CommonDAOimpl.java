@@ -19,6 +19,12 @@ import com.trailblazer.api.core.dao.CommonDAO;
 import com.trailblazer.api.core.entities.AbstractEntity;
 import com.trailblazer.api.core.utils.RecordStatus;
 
+/**
+ * @author azaz.akhtar
+ *
+ * @param <E>
+ * @param <I>
+ */
 public abstract class CommonDAOimpl<E extends AbstractEntity, I extends Serializable> extends HibernateDaoSupport
 		implements CommonDAO<E, I> {
 	public static final Logger LOGGER = Logger.getLogger(CommonDAOimpl.class);
@@ -36,18 +42,17 @@ public abstract class CommonDAOimpl<E extends AbstractEntity, I extends Serializ
 		try (Session session = getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
 			if (transaction != null) {
-				entity.setCreatedAt(new Date());
-				entity.setUpdatedAt(new Date());
+				Date currentDate = new Date();
+				entity.setCreatedAt(currentDate);
+				entity.setUpdatedAt(currentDate);
 				entity.setRecordStatus(RecordStatus.NEW);
-				try {
-					session.save(entity);
-					transaction.commit();
-				} catch (Exception e) {
-					LOGGER.error(e);
-					transaction.rollback();
-				}
+				session.save(entity);
+				transaction.commit();
 			}
 		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
 			LOGGER.error(e);
 		}
 		return entity;
@@ -60,15 +65,13 @@ public abstract class CommonDAOimpl<E extends AbstractEntity, I extends Serializ
 			transaction = session.beginTransaction();
 			if (transaction != null) {
 				entity.setUpdatedAt(new Date());
-				try {
-					session.update(entity);
-					transaction.commit();
-				} catch (Exception e) {
-					LOGGER.error(e);
-					transaction.rollback();
-				}
+				session.update(entity);
+				transaction.commit();
 			}
 		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
 			LOGGER.error(e);
 		}
 		return entity;
@@ -82,15 +85,13 @@ public abstract class CommonDAOimpl<E extends AbstractEntity, I extends Serializ
 			if (transaction != null) {
 				entity.setUpdatedAt(new Date());
 				entity.setEntityId(id);
-				try {
-					session.update(entity);
-					transaction.commit();
-				} catch (Exception e) {
-					LOGGER.error(e);
-					transaction.rollback();
-				}
+				session.update(entity);
+				transaction.commit();
 			}
 		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
 			LOGGER.error(e);
 		}
 		return entity;
@@ -103,15 +104,13 @@ public abstract class CommonDAOimpl<E extends AbstractEntity, I extends Serializ
 			transaction = session.beginTransaction();
 			if (transaction != null) {
 				entity.setUpdatedAt(new Date());
-				try {
-					session.saveOrUpdate(entity);
-					transaction.commit();
-				} catch (Exception e) {
-					LOGGER.error(e);
-					transaction.rollback();
-				}
+				session.saveOrUpdate(entity);
+				transaction.commit();
 			}
 		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
 			LOGGER.error(e);
 		}
 		return entity;
@@ -182,7 +181,6 @@ public abstract class CommonDAOimpl<E extends AbstractEntity, I extends Serializ
 
 	@Override
 	public E vertualDelete(I id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
