@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.trailblazer.api.core.entities.User;
+import com.trailblazer.api.core.utils.TbMessageContainer;
 
 public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
@@ -42,11 +43,9 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
 		String token = jwtAuthenticationToken.getToken();
 		User parsedUser = jwtUtil.parseToken(token);
 		if (parsedUser == null) {
-			throw new JwtTokenMalformedException("JWT token is not valid");
+			throw new JwtTokenMalformedException(TbMessageContainer.INVALID_ACCESS_TOKEN_MESSAGE);
 		}
-		
-		grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN");
-		
+		grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(parsedUser.getRoles());
 		return new AuthenticatedUser(parsedUser.getEntityId(), parsedUser.getUsername(), token, grantedAuthorities);
 	}
 	

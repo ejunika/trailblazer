@@ -51,6 +51,11 @@ public interface CommonDAO<E extends AbstractEntity, I extends Serializable> {
 	 * @return
 	 */
 	List<E> getAll(Integer offset, Integer limit, List<Byte> rsl);
+	
+	/**
+	 * @return
+	 */
+	List<E> getAll();
 
 	/**
 	 * @param entity

@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
-import com.trailblazer.api.core.utils.BTMessageContainer;
+import com.trailblazer.api.core.utils.TbMessageContainer;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 	
@@ -30,7 +29,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         String header = request.getHeader("Authorization");
 
         if (header == null || !header.startsWith("Bearer ")) {
-            throw new JwtTokenMissingException(BTMessageContainer.TOKEN_MISSING_MESSAGE);
+            throw new JwtTokenMissingException(TbMessageContainer.TOKEN_MISSING_MESSAGE);
         }
 
         String authToken = header.substring(7);

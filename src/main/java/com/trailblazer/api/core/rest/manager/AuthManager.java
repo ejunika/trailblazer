@@ -1,10 +1,14 @@
 package com.trailblazer.api.core.rest.manager;
 
+import com.trailblazer.api.core.dao.PasswordDAO;
 import com.trailblazer.api.core.dao.UserDAO;
+import com.trailblazer.api.core.entities.Password;
 import com.trailblazer.api.core.entities.SignupRequest;
 import com.trailblazer.api.core.entities.User;
 import com.trailblazer.api.core.exceptions.DuplicateUserException;
 import com.trailblazer.api.core.exceptions.UnavailableUsernameExeption;
+import com.trailblazer.api.core.rest.services.LoginRequest;
+import com.trailblazer.api.core.security.JwtUtil;
 
 /**
  * @author azaz.akhtar
@@ -13,6 +17,10 @@ import com.trailblazer.api.core.exceptions.UnavailableUsernameExeption;
 public class AuthManager {
 
 	private UserDAO userDAO;
+	
+	private PasswordDAO passwordDAO;
+	
+	private JwtUtil jwtUtil;
 
 	public UserDAO getUserDAO() {
 		return userDAO;
@@ -77,6 +85,33 @@ public class AuthManager {
 			result = true;
 		}
 		return result;
+	}
+
+	public String doLogin(LoginRequest loginRequest) {
+		String emailId = loginRequest.getEmailId();
+		User user = userDAO.getUserByEmailId(emailId);
+		String accessToken = null;
+		Password password = passwordDAO.getActivePasswordByUserId(user.getEntityId());
+		if (password.getPasswordHash().equals(loginRequest.getPassword())) {
+			accessToken = jwtUtil.generateToken(user);			
+		}
+		return accessToken;
+	}
+
+	public JwtUtil getJwtUtil() {
+		return jwtUtil;
+	}
+
+	public void setJwtUtil(JwtUtil jwtUtil) {
+		this.jwtUtil = jwtUtil;
+	}
+
+	public PasswordDAO getPasswordDAO() {
+		return passwordDAO;
+	}
+
+	public void setPasswordDAO(PasswordDAO passwordDAO) {
+		this.passwordDAO = passwordDAO;
 	}
 
 }
