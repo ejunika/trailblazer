@@ -8,31 +8,40 @@
       http://www.springframework.org/schema/security/spring-security-4.2.xsd
       http://www.springframework.org/schema/beans 
       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+	
 	<global-method-security pre-post-annotations="enabled" />
 	
-	<http pattern="/v1/api/auth/**" security="none"/>
-	<http pattern="/v1/api" security="none"/>
 	
-	<beans:bean id="restAuthenticationEntryPoint" class="com.trailblazer.api.core.security.RestAuthenticationEntryPoint" />
-	<beans:bean id="jwtAuthenticationFilter" class="com.trailblazer.api.core.security.JwtAuthenticationFilter">
-		<beans:property name="authenticationManager" ref="authenticationManager" />
-		<beans:property name="authenticationSuccessHandler" ref="restAuthenticationSuccessHandler" />
-		<beans:property name="authenticationFailureHandler" ref="restAuthenticationFailureHandler" />
-	</beans:bean>
-	<http pattern="/v1/api/**" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
-		<sec:csrf disabled="true"/>
-		<sec:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
-	</http>
-
+	
+<!-- 	<http pattern="/v1/api/auth/**" security="none"/>
+	<http pattern="/v1/api" security="none"/>
+ -->	
 	<beans:bean id="restAuthenticationProvider" class="com.trailblazer.api.core.security.RestAuthenticationProvider" />
+	
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="restAuthenticationProvider" />
 	</authentication-manager>
 	
-	<beans:bean id="jwtUtil" class="com.trailblazer.api.core.security.JwtUtil" />
 	<beans:bean id="restAuthenticationSuccessHandler" class="com.trailblazer.api.core.security.RestAuthenticationSuccessHandler" />
 	<beans:bean id="restAuthenticationFailureHandler" class="com.trailblazer.api.core.security.RestAuthenticationFailureHandler" />
+	
+	<beans:bean id="jwtAuthenticationFilter" class="com.trailblazer.api.core.security.JwtAuthenticationFilter" >
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationSuccessHandler" ref="restAuthenticationSuccessHandler" />
+		<beans:property name="authenticationFailureHandler" ref="restAuthenticationFailureHandler" />
+	</beans:bean>
+	
+	<beans:bean id="restAuthenticationEntryPoint" class="com.trailblazer.api.core.security.RestAuthenticationEntryPoint" />
+	
+	<http use-expressions="true" auto-config="true" entry-point-ref="restAuthenticationEntryPoint" >
+		<sec:csrf/>
+		<sec:anonymous enabled="false"/>
+		<sec:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>	
+		<sec:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
+	</http>
+	
+	<beans:bean id="jwtUtil" class="com.trailblazer.api.core.security.JwtUtil" />
+	
 	<beans:bean id="restSavedRequestAwareAuthenticationSuccessHandler" class="com.trailblazer.api.core.security.RestSavedRequestAwareAuthenticationSuccessHandler" />
-
 
 </beans:beans>

@@ -7,16 +7,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.trailblazer.api.core.utils.BTMessageContainer;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 	
+	
 	public JwtAuthenticationFilter() {
         super("/**");
+        super.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/**"));
     }
 	
 	@Override
@@ -36,7 +40,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         String authToken = header.substring(7);
 
         JwtAuthenticationToken authRequest = new JwtAuthenticationToken(authToken);
-
+        System.out.println("getAuthenticationManager() :"+authRequest.getAuthorities());
         return getAuthenticationManager().authenticate(authRequest);
     }
 
@@ -47,6 +51,11 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
         // As this authentication is in HTTP header, after success we need to continue the request normally
         // and return the response as if the resource was not secured at all
+        System.out.println(authResult.getAuthorities());
+        System.out.println(authResult.isAuthenticated());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+        
         chain.doFilter(request, response);
     }
+    
 }

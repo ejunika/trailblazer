@@ -46,6 +46,7 @@ public class JwtUtil {
 			User user = new User();
 			user.setUsername(body.getSubject());
 			user.setEntityId(Long.parseLong((String) body.get("userId")));
+			user.setRoles(body.get("roles").toString());
 			return user;
 		} catch (JwtException | ClassCastException e) {
 			return null;
@@ -70,6 +71,8 @@ public class JwtUtil {
 		claims.setIssuer("www.eztech.com");
 		claims.put("userId", user.getEntityId().toString());
 		claims.put("emailId", user.getEmailId());
+		claims.put("roles", "ROLE_ADMIN");
+		
 		accessToken = Jwts.builder().setClaims(claims).signWith(SIGNATUREALGORITHM, BASE64ENCODEDKEY).compact();
 		if (accessToken != null) {
 			tbSession.put(accessToken, user);

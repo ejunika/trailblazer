@@ -3,6 +3,7 @@ package com.trailblazer.api.core.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,6 +25,9 @@ public class User extends AbstractEntity {
 	private String firstName;
 	@Column(name = "last_name")
 	private String lastName;
+	
+	@Transient
+	private String roles;
 	
 	public User() {
 		super();
@@ -63,6 +67,14 @@ public class User extends AbstractEntity {
 
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
+	}
+
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 
 }

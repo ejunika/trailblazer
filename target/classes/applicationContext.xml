@@ -16,7 +16,8 @@
         http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd"> 
     
     <context:annotation-config />
-    
+<!--     <context:component-scan base-package="com.trailblazer.api.core.utils" />
+ -->    
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
             <value>classpath:database.properties</value>

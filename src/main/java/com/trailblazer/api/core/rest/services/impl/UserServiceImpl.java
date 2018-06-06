@@ -32,7 +32,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Response get(Long id) {
-		return null;
+		User u = new User();
+		u.setEmailId("akhtar.azaz@live.com");
+		u.setUsername("ejunika id");
+		u.setFirstName("Md Azaz");
+		u.setLastName("Akhtar");
+		return Response.ok(new BtResponse<User>(true, BTMessageContainer.RETRIVE_USER_MESSAGE, u)).build();
 	}
 
 	@Override

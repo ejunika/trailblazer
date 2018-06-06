@@ -11,6 +11,8 @@
 	
 	<global-method-security pre-post-annotations="enabled" />
 	
+	
+	
 	<http pattern="/v1/api/auth/**" security="none"/>
 	<http pattern="/v1/api" security="none"/>
 	
@@ -23,7 +25,7 @@
 	<beans:bean id="restAuthenticationSuccessHandler" class="com.trailblazer.api.core.security.RestAuthenticationSuccessHandler" />
 	<beans:bean id="restAuthenticationFailureHandler" class="com.trailblazer.api.core.security.RestAuthenticationFailureHandler" />
 	
-	<beans:bean id="jwtAuthenticationFilter" class="com.trailblazer.api.core.security.JwtAuthenticationFilter">
+	<beans:bean id="jwtAuthenticationFilter" class="com.trailblazer.api.core.security.JwtAuthenticationFilter" >
 		<beans:property name="authenticationManager" ref="authenticationManager" />
 		<beans:property name="authenticationSuccessHandler" ref="restAuthenticationSuccessHandler" />
 		<beans:property name="authenticationFailureHandler" ref="restAuthenticationFailureHandler" />
@@ -31,11 +33,14 @@
 	
 	<beans:bean id="restAuthenticationEntryPoint" class="com.trailblazer.api.core.security.RestAuthenticationEntryPoint" />
 	
-	<http use-expressions="true" auto-config="false" pattern="/v1/api/**" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
-		<sec:csrf disabled="true"/>
-		<sec:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
-		<sec:intercept-url pattern="/users" access="hasRole('ROLE_ADMIN')"/>
-		
+	<http use-expressions="true" auto-config="true" entry-point-ref="restAuthenticationEntryPoint" >
+		<sec:csrf/>
+		<sec:anonymous enabled="false"/>
+		<sec:intercept-url pattern="/v1/api/users" access="hasRole('ROLE_USER')"/>
+		<sec:intercept-url pattern="/v1/api/users/**" access="hasRole('ROLE_ADMIN')"/>
+			
+<!-- 		<sec:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>	
+ -->		<sec:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
 	</http>
 	
 	<beans:bean id="jwtUtil" class="com.trailblazer.api.core.security.JwtUtil" />
