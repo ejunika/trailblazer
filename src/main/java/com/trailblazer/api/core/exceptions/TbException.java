@@ -1,17 +1,17 @@
 package com.trailblazer.api.core.exceptions;
 
-public class BtException extends RuntimeException {
+public class TbException extends RuntimeException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public BtException() {
+	public TbException() {
 		
 	}
 
-	public BtException(String message) {
+	public TbException(String message) {
 		super(message);
 	}
 

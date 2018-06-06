@@ -19,7 +19,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 		response.setContentType(MediaType.APPLICATION_JSON);
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		PrintWriter out = response.getWriter();
-		out.print("{\"status\":false,\"infoMessage\":\"Unauthorized\"}");
+		out.print("{\"status\":false,\"infoMessage\":\"Unauthorized access of resource\"}");
 	}
 
 }

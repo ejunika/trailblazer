@@ -52,6 +52,7 @@
             <list>
                 <value>com.trailblazer.api.core.entities.User</value>
                 <value>com.trailblazer.api.core.entities.Password</value>
+                <value>com.trailblazer.api.core.entities.Navigation</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -65,9 +66,11 @@
         </property>
     </bean>
     
+    <bean id="jwtUtil" class="com.trailblazer.api.core.security.JwtUtil" autowire="byName" />
     <bean id="userDAO" class="com.trailblazer.api.core.dao.impl.UserDAOimpl" autowire="byName" />
     <bean id="passwordDAO" class="com.trailblazer.api.core.dao.impl.PasswordDAOimpl" autowire="byName" />
     <bean id="authManager" class="com.trailblazer.api.core.rest.manager.AuthManager" autowire="byName" />
+    <bean id="userManager" class="com.trailblazer.api.core.rest.manager.UserManager" autowire="byName" />
     
     <import resource="classpath:restContext.xml"/>
     

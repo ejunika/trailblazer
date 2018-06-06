@@ -17,6 +17,7 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import com.trailblazer.api.core.dao.CommonDAO;
 import com.trailblazer.api.core.entities.AbstractEntity;
+import com.trailblazer.api.core.exceptions.EntityNotFoundException;
 import com.trailblazer.api.core.utils.RecordStatus;
 
 /**
@@ -181,7 +182,19 @@ public abstract class CommonDAOimpl<E extends AbstractEntity, I extends Serializ
 
 	@Override
 	public E vertualDelete(I id) {
-		return null;
+		E entity = get(id);
+		if (entity != null) {
+			entity.setRecordStatus(RecordStatus.DELETED);
+			update(entity);
+		} else {
+			throw new EntityNotFoundException();
+		}
+		return entity;
+	}
+
+	@Override
+	public List<E> getAll() {
+		return getAll(null, null, null);
 	}
 
 }

@@ -28,21 +28,13 @@
 	</beans:bean>
 	
 	<beans:bean id="restAuthenticationEntryPoint" class="com.trailblazer.api.core.security.RestAuthenticationEntryPoint" />
-		
-<!-- 	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased"> -->
-<!-- 	    <beans:constructor-arg> -->
-<!-- 	        <beans:list> -->
-<!-- 	            <beans:bean class="org.springframework.security.web.access.expression.WebExpressionVoter" /> -->
-<!-- 	            <beans:bean class="org.springframework.security.access.vote.RoleVoter" /> -->
-<!-- 	            <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter" /> -->
-<!-- 	        </beans:list> -->
-<!-- 	    </beans:constructor-arg> -->
-<!-- 	</beans:bean> -->
-	
-	<http pattern="/v1/api/**" use-expressions="true" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
+			
+	<http use-expressions="true" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
 		<sec:csrf disabled="true"/>
+		<sec:anonymous enabled="false"/>
 		<sec:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
-		<sec:intercept-url pattern="/users" access="hasRole('ROLE_ADMIN')"/>
+		<sec:intercept-url pattern="/v1/api/users" access="hasRole('ROLE_USER')"/>
+		<sec:intercept-url pattern="/v1/api/users/*" access="hasRole('ROLE_ADMIN')"/>
 	</http>
 	
 	<beans:bean id="jwtUtil" class="com.trailblazer.api.core.security.JwtUtil" />
