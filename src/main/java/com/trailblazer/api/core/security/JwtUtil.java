@@ -30,14 +30,6 @@ public class JwtUtil {
 	 */
 	protected static Map<String, User> tbSession = new ConcurrentHashMap<>();
 
-	static {
-		User u = new User();
-		u.setEntityId(111l);
-		u.setEmailId("test.user@test.com");
-		u.setRoles("ROLE_USER");
-		System.out.println(new JwtUtil().generateToken(u));
-	}
-
 	/**
 	 * @param token
 	 * @return
