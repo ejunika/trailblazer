@@ -1,7 +1,14 @@
 package com.trailblazer.api.core.entities;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,17 +32,21 @@ public class User extends AbstractEntity {
 	private String firstName;
 	@Column(name = "last_name")
 	private String lastName;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_user_groups", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "user_group_id") })
+	private Set<UserGroup> userGroups;
 	@Transient
 	private String roles;
-	
+
 	public User() {
 		super();
 	}
-	
+
 	public User(User user) {
 		super(user);
 	}
-	
+
 	public User(Long userId) {
 		super();
 		this.setEntityId(userId);
@@ -79,6 +90,14 @@ public class User extends AbstractEntity {
 
 	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+	public Set<UserGroup> getUserGroups() {
+		return userGroups;
+	}
+
+	public void setUserGroups(Set<UserGroup> userGroups) {
+		this.userGroups = userGroups;
 	}
 
 }

@@ -6,6 +6,7 @@ package com.trailblazer.api.core.utils;
  */
 public class TbMessageContainer {
 
+	public static final String ISSUER_INFO_TEXT = "https://www.trailblazer.edu";
 	public static final String TOKEN_MISSING_MESSAGE = "No JWT token found in request headers";
 	public static final String LOGOUT_SUCCESS_MESSAGE = "Successfully logout";
 	public static final String SIGNUP_SUCCESS_MESSAGE = "User registered successfully";

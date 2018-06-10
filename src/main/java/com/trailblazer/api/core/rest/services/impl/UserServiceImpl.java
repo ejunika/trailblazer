@@ -19,7 +19,7 @@ import com.trailblazer.api.core.utils.TbMessageContainer;
  *
  */
 public class UserServiceImpl implements UserService {
-	
+
 	private UserManager userManager;
 
 	@Override
