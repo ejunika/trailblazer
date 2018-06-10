@@ -120,5 +120,10 @@
 			<artifactId>cxf-rt-rs-service-description</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mapdb</groupId>
+			<artifactId>mapdb</artifactId>
+			<version>3.0.2</version>
+		</dependency>
 	</dependencies>
 </project>

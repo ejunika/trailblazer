@@ -14,7 +14,7 @@ import com.trailblazer.api.core.utils.TbMessageContainer;
  *
  */
 public class AuthServiceImpl implements AuthService {
-	
+
 	private AuthManager authManager;
 
 	@Override

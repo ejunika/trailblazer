@@ -5,10 +5,14 @@ import com.trailblazer.api.core.dao.UserDAO;
 import com.trailblazer.api.core.entities.Password;
 import com.trailblazer.api.core.entities.SignupRequest;
 import com.trailblazer.api.core.entities.User;
+import com.trailblazer.api.core.entities.UserGroup;
 import com.trailblazer.api.core.exceptions.DuplicateUserException;
+import com.trailblazer.api.core.exceptions.TbException;
 import com.trailblazer.api.core.exceptions.UnavailableUsernameExeption;
 import com.trailblazer.api.core.rest.services.LoginRequest;
 import com.trailblazer.api.core.security.JwtUtil;
+import com.trailblazer.api.core.utils.RecordStatus;
+import com.trailblazer.api.core.utils.TbUtils;
 
 /**
  * @author azaz.akhtar
@@ -17,9 +21,9 @@ import com.trailblazer.api.core.security.JwtUtil;
 public class AuthManager {
 
 	private UserDAO userDAO;
-	
+
 	private PasswordDAO passwordDAO;
-	
+
 	private JwtUtil jwtUtil;
 
 	public UserDAO getUserDAO() {
@@ -88,12 +92,29 @@ public class AuthManager {
 	}
 
 	public String doLogin(LoginRequest loginRequest) {
+		String accessToken = null;
 		String emailId = loginRequest.getEmailId();
 		User user = userDAO.getUserByEmailId(emailId);
-		String accessToken = null;
-		Password password = passwordDAO.getActivePasswordByUserId(user.getEntityId());
-		if (password.getPasswordHash().equals(loginRequest.getPassword())) {
-			accessToken = jwtUtil.generateToken(user);			
+		if (user != null) {
+			if (RecordStatus.ACTIVE.equals(user.getRecordStatus())) {
+				StringBuilder roles = new StringBuilder();
+				if (user.getUserGroups() != null) {
+					for (UserGroup userGroup : user.getUserGroups()) {
+						if (userGroup != null && RecordStatus.ACTIVE.equals(userGroup.getRecordStatus())) {
+							roles.append(TbUtils.getCommaSeparatedRoles(userGroup.getRoles()));
+						}
+					}
+					user.setRoles(roles.toString());
+				}
+				Password password = passwordDAO.getActivePasswordByUserId(user.getEntityId());
+				if (password.getPasswordHash().equals(loginRequest.getPassword())) {
+					accessToken = jwtUtil.generateToken(user);
+				}
+			} else {
+				throw new TbException("User is not active");
+			}
+		} else {
+			throw new TbException("Invalid user");
 		}
 		return accessToken;
 	}

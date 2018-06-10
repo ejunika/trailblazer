@@ -14,7 +14,7 @@ import com.trailblazer.api.core.entities.User;
 public class PasswordDAOimpl extends CommonDAOimpl<Password, Long> implements PasswordDAO {
 
 	private PasswordDAO passwordDAO;
-	
+
 	@Override
 	public Password getActivePasswordByUserId(Long userId) {
 		Password password = null;
