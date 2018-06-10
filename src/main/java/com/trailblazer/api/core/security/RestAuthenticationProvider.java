@@ -41,7 +41,6 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
 		List<GrantedAuthority> grantedAuthorities = null;
 		JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
 		String token = jwtAuthenticationToken.getToken();
-		//JwtUtil.tbSession.get(token);
 		User parsedUser = jwtUtil.parseToken(token);
 		if (parsedUser == null) {
 			throw new JwtTokenMalformedException(TbMessageContainer.INVALID_ACCESS_TOKEN_MESSAGE);

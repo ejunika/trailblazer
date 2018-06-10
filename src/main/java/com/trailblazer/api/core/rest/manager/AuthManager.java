@@ -43,7 +43,9 @@ public class AuthManager {
 		User user = null;
 		if (!isDuplicateUser(signupRequest.getUser().getEmailId())) {
 			if (isUsernameAvailable(signupRequest.getUser().getUsername())) {
-				user = userDAO.signup(signupRequest.getUser(), signupRequest.getPassword());
+				Password password = signupRequest.getPassword();
+				password.setPasswordHash(TbUtils.getPasswordHash(password.getPasswordHash()));
+				user = userDAO.signup(signupRequest.getUser(), password);
 				if (user.getEntityId() != null) {
 					result = true;
 				}
@@ -107,7 +109,7 @@ public class AuthManager {
 					user.setRoles(roles.toString());
 				}
 				Password password = passwordDAO.getActivePasswordByUserId(user.getEntityId());
-				if (password.getPasswordHash().equals(loginRequest.getPassword())) {
+				if (password.getPasswordHash().equals(TbUtils.getPasswordHash(loginRequest.getPassword()))) {
 					accessToken = jwtUtil.generateToken(user);
 				}
 			} else {

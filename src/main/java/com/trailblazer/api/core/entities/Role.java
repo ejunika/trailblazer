@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author azaz.akhtar
+ *
+ */
 @Entity
 @Table(name = "roles")
 @XmlRootElement

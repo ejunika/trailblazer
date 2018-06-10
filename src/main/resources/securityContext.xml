@@ -9,8 +9,8 @@
 	
 	<global-method-security pre-post-annotations="enabled" />
 	
-	<http pattern="/v1/api/auth/**" security="none"/>
 	<http pattern="/v1/api" security="none"/>
+	<http pattern="/v1/api/auth/**" security="none"/>
 	
 	<beans:bean id="restAuthenticationProvider" class="com.trailblazer.api.core.security.RestAuthenticationProvider" />
 	
