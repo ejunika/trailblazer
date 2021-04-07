@@ -1,8 +1,8 @@
 package com.trailblazer.api.core.exceptions;
 
-import com.trailblazer.api.core.utils.BTMessageContainer;
+import com.trailblazer.api.core.utils.TbMessageContainer;
 
-public class UnavailableUsernameExeption extends BtException {
+public class UnavailableUsernameExeption extends TbException {
 
 	/**
 	 * 
@@ -10,7 +10,7 @@ public class UnavailableUsernameExeption extends BtException {
 	private static final long serialVersionUID = 1L;
 	
 	public UnavailableUsernameExeption() {
-		super(BTMessageContainer.DUPLICATE_USERNAME_EXCEPTION_MESSAGE);
+		super(TbMessageContainer.DUPLICATE_USERNAME_EXCEPTION_MESSAGE);
 	}
 
 }

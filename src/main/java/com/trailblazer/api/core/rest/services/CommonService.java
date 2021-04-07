@@ -15,6 +15,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.trailblazer.api.core.entities.AbstractEntity;
+
 /**
  * @author M A AKHTAR
  *
@@ -23,7 +25,7 @@ import javax.ws.rs.core.Response;
 @WebService
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public interface CommonService<E> {
+public interface CommonService<E extends AbstractEntity> {
 
 	/**
 	 * @param offset

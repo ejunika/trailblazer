@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.trailblazer.api.core.entities.User;
+import com.trailblazer.api.core.utils.TbMessageContainer;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -27,7 +28,7 @@ public class JwtUtil {
 	/**
 	 * 
 	 */
-	protected static Map<String, User> portalSession = new ConcurrentHashMap<>();
+	protected static Map<String, User> tbSession = new ConcurrentHashMap<>();
 
 	/**
 	 * @param token
@@ -39,6 +40,7 @@ public class JwtUtil {
 			User user = new User();
 			user.setUsername(body.getSubject());
 			user.setEntityId(Long.parseLong((String) body.get("userId")));
+			user.setRoles(body.get("roles", String.class));
 			return user;
 		} catch (JwtException | ClassCastException e) {
 			return null;
@@ -60,12 +62,13 @@ public class JwtUtil {
 		claims.setSubject(user.getUsername());
 		claims.setExpiration(exp);
 		claims.setIssuedAt(now);
-		claims.setIssuer("www.eztech.com");
+		claims.setIssuer(TbMessageContainer.ISSUER_INFO_TEXT);
 		claims.put("userId", user.getEntityId().toString());
 		claims.put("emailId", user.getEmailId());
+		claims.put("roles", user.getRoles());
 		accessToken = Jwts.builder().setClaims(claims).signWith(SIGNATUREALGORITHM, BASE64ENCODEDKEY).compact();
 		if (accessToken != null) {
-			portalSession.put(accessToken, user);
+			tbSession.put(accessToken, user);
 		}
 		return accessToken;
 	}

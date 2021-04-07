@@ -53,6 +53,11 @@ public interface CommonDAO<E extends AbstractEntity, I extends Serializable> {
 	List<E> getAll(Integer offset, Integer limit, List<Byte> rsl);
 
 	/**
+	 * @return
+	 */
+	List<E> getAll();
+
+	/**
 	 * @param entity
 	 * @return
 	 */
@@ -65,6 +70,8 @@ public interface CommonDAO<E extends AbstractEntity, I extends Serializable> {
 	E delete(I id);
 
 	/**
+	 * Changed the record status of the entity to deleted
+	 * 
 	 * @param id
 	 * @return
 	 */

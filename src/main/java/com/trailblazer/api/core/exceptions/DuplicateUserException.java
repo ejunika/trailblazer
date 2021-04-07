@@ -1,15 +1,15 @@
 package com.trailblazer.api.core.exceptions;
 
-import com.trailblazer.api.core.utils.BTMessageContainer;
+import com.trailblazer.api.core.utils.TbMessageContainer;
 
-public class DuplicateUserException extends BtException {
+public class DuplicateUserException extends TbException {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	public DuplicateUserException() {
-		super(BTMessageContainer.DUPLICATE_USER_EXCEPTION_MESSAGE);
+		super(TbMessageContainer.DUPLICATE_USER_EXCEPTION_MESSAGE);
 	}
 	
 	public DuplicateUserException(String message) {

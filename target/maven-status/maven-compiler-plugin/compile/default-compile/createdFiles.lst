@@ -3,6 +3,7 @@ com/trailblazer/api/core/exceptions/UnavailableUsernameExeption.class
 com/trailblazer/api/core/utils/BTMessageContainer.class
 com/trailblazer/api/core/security/RestAuthenticationProvider.class
 com/trailblazer/api/core/exceptions/DuplicateUserException.class
+com/trailblazer/api/core/dao/impl/PasswordDAOimpl.class
 com/trailblazer/api/core/dao/CommonDAO.class
 com/trailblazer/api/core/security/RestAuthenticationEntryPoint.class
 com/trailblazer/api/core/dao/UserDAO.class
@@ -12,14 +13,18 @@ com/trailblazer/api/core/entities/AbstractEntity.class
 com/trailblazer/api/core/security/JwtTokenMalformedException.class
 com/trailblazer/api/core/dao/impl/CommonDAOimpl.class
 com/trailblazer/api/core/entities/User.class
+com/trailblazer/api/core/entities/SignupRequest.class
 com/trailblazer/api/core/security/RestAuthenticationSuccessHandler.class
 com/trailblazer/api/core/security/JwtTokenMissingException.class
 com/trailblazer/api/core/exceptions/BtException.class
 com/trailblazer/api/core/rest/services/impl/UserServiceImpl.class
 com/trailblazer/api/core/entities/BtResponse.class
 com/trailblazer/api/core/security/JwtUtil.class
+com/trailblazer/api/core/entities/Password.class
 com/trailblazer/api/core/rest/services/UserService.class
 com/trailblazer/api/core/rest/services/CommonService.class
+com/trailblazer/api/core/security/RestDecisionManager.class
+com/trailblazer/api/core/dao/PasswordDAO.class
 com/trailblazer/api/core/utils/RecordStatus.class
 com/trailblazer/api/core/security/RestAuthenticationFailureHandler.class
 com/trailblazer/api/core/security/JwtAuthenticationToken.class
